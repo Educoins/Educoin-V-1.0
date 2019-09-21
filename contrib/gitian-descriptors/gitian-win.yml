@@ -2,14 +2,14 @@
 name: "EduCoin"
 enable_cache: true
 suites:
-- "trusty"
+- "precise"
 architectures:
 - "amd64"
 packages:
 - "g++"
 - "git-core"
 - "pkg-config"
-- "autoconf"
+- "autoconf2.13"
 - "libtool"
 - "automake"
 - "faketime"
@@ -46,7 +46,7 @@ script: |
   for prog in ${FAKETIME_PROGS}; do
     echo '#!/bin/bash' > ${WRAP_DIR}/${prog}
     echo "REAL=\`which -a ${prog} | grep -v ${WRAP_DIR}/${prog} | head -1\`" >> ${WRAP_DIR}/${prog}
-    echo 'export LD_PRELOAD=/usr/lib/x86_64-linux-gnu/faketime/libfaketime.so.1' >> ${WRAP_DIR}/${prog}
+    echo 'export LD_PRELOAD=/usr/lib/faketime/libfaketime.so.1' >> ${WRAP_DIR}/${prog}
     echo "export FAKETIME=\"${REFERENCE_DATETIME}\"" >> ${WRAP_DIR}/${prog}
     echo "\$REAL \$@" >> $WRAP_DIR/${prog}
     chmod +x ${WRAP_DIR}/${prog}
@@ -57,7 +57,7 @@ script: |
     for prog in ${FAKETIME_HOST_PROGS}; do
         echo '#!/bin/bash' > ${WRAP_DIR}/${i}-${prog}
         echo "REAL=\`which -a ${i}-${prog} | grep -v ${WRAP_DIR}/${i}-${prog} | head -1\`" >> ${WRAP_DIR}/${i}-${prog}
-        echo 'export LD_PRELOAD=/usr/lib/x86_64-linux-gnu/faketime/libfaketime.so.1' >> ${WRAP_DIR}/${i}-${prog}
+        echo 'export LD_PRELOAD=/usr/lib/faketime/libfaketime.so.1' >> ${WRAP_DIR}/${i}-${prog}
         echo "export FAKETIME=\"${REFERENCE_DATETIME}\"" >> ${WRAP_DIR}/${i}-${prog}
         echo "\$REAL \$@" >> $WRAP_DIR/${i}-${prog}
         chmod +x ${WRAP_DIR}/${i}-${prog}
@@ -76,14 +76,14 @@ script: |
   ./autogen.sh
   ./configure --prefix=${BASEPREFIX}/`echo "${HOSTS}" | awk '{print $1;}'`
   make dist
-  SOURCEDIST=`echo EduCoin-*.tar.gz`
+  SOURCEDIST=`echo clam-*.tar.gz`
   DISTNAME=`echo ${SOURCEDIST} | sed 's/.tar.*//'`
 
   # Correct tar file order
   mkdir -p temp
   pushd temp
   tar xf ../$SOURCEDIST
-  find EduCoin-* | sort | tar --no-recursion --mode='u+rw,go+r-w,a+X' --owner=0 --group=0 -c -T - | gzip -9n > ../$SOURCEDIST
+  find clam-* | sort | tar --no-recursion --mode='u+rw,go+r-w,a+X' --owner=0 --group=0 -c -T - | gzip -9n > ../$SOURCEDIST
   popd
 
   ORIGPATH="$PATH"
@@ -100,7 +100,7 @@ script: |
     make ${MAKEOPTS}
     make deploy
     make install-strip
-    cp -f EduCoin-*setup*.exe $OUTDIR/
+    cp -f clam-*setup*.exe $OUTDIR/
     cd installed
     find . -name "*.dll"
     #mv ${DISTNAME}/bin/*.dll ${DISTNAME}/lib/

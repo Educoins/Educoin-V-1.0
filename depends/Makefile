@@ -7,7 +7,7 @@ NO_QT ?=
 NO_WALLET ?=
 NO_UPNP ?=
 USE_LINUX_STATIC_QT5 ?=
-FALLBACK_DOWNLOAD_PATH ?= https://EduCoinclient.com/depends-sources
+FALLBACK_DOWNLOAD_PATH ?= https://clamclient.com/depends-sources
 
 BUILD = $(shell ./config.guess)
 HOST ?= $(BUILD)
@@ -125,7 +125,7 @@ $(host_prefix)/share/config.site : config.site.in $(host_prefix)/.stamp_$(final_
 install: $(host_prefix)/share/config.site
 download-one: $(all_sources)
 download-osx:
-	@$(MAKE) -s HOST=x86_64-apple-darwin14 download-one
+	@$(MAKE) -s HOST=x86_64-apple-darwin11 download-one
 download-linux:
 	@$(MAKE) -s HOST=x86_64-unknown-linux-gnu download-one
 download-win:
