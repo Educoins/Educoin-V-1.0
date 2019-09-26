@@ -1,6 +1,9 @@
 #ifndef NOTIFICATOR_H
 #define NOTIFICATOR_H
 
+#if defined(HAVE_CONFIG_H)
+#include "bitcoin-config.h"
+#endif
 
 #include <QIcon>
 #include <QObject>
