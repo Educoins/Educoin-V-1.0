@@ -3,6 +3,10 @@
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
+#if defined(HAVE_CONFIG_H)
+#include "bitcoin-config.h"
+#else
+
 #include "txdb.h"
 #include "walletdb.h"
 #include "rpcserver.h"
