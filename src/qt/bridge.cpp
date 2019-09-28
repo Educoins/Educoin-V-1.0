@@ -936,17 +936,19 @@ bool UIBridge::setPubKey(QString address, QString pubkey)
 
 bool UIBridge::sendMessage(const QString &address, const QString &message, const QString &from)
 {
-    if(!fWalletUnlockMessagingEnabled){
-        WalletModel::UnlockContext ctx(window->walletModel->requestUnlock());
+    bool is_encrypted = window->walletModel->getEncryptionStatus() != WalletModel::Unencrypted;
 
-        // Unlock wallet was cancelled
-        if(!ctx.isValid())
+    //only care about fWalletUnlockMessagingEnabled if wallet is encrypted.
+    if (is_encrypted)
+    {
+        if (!fWalletUnlockMessagingEnabled)
+            window->toggleLock();
+
+        //check again if the unlocked it
+        if (!fWalletUnlockMessagingEnabled)
             return false;
     }
 
-    if(!fWalletUnlockMessagingEnabled){
-        return false;
-	}
     MessageModel::StatusCode sendstatus = thMessage->mtm->sendMessage(address, message, from);
 
     switch(sendstatus)

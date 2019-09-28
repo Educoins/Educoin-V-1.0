@@ -1,7 +1,3 @@
-#if defined(HAVE_CONFIG_H)
-#include "bitcoin-config.h"
-#endif
-
 #include "addresstablemodel.h"
 #include "guiutil.h"
 #include "walletmodel.h"
