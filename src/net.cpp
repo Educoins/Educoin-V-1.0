@@ -3,10 +3,6 @@
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#if defined(HAVE_CONFIG_H)
-#include "bitcoin-config.h"
-#endif
-
 #include "db.h"
 #include "net.h"
 #include "init.h"
@@ -27,11 +23,6 @@
 
 // Dump addresses to peers.dat every 15 minutes (900s)
 #define DUMP_ADDRESSES_INTERVAL 900
-
-#if !defined(HAVE_MSG_NOSIGNAL)
-#define MSG_NOSIGNAL 0
-#endif
-
 
 using namespace std;
 using namespace boost;
