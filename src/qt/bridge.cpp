@@ -964,6 +964,12 @@ bool UIBridge::sendMessage(const QString &address, const QString &message, const
         if (!fWalletUnlockMessagingEnabled)
             window->toggleLock();
 
+    //only care about fWalletUnlockMessagingEnabled if wallet is encrypted.
+    if (is_encrypted)
+    {
+        if (!fWalletUnlockMessagingEnabled)
+            window->toggleLock();
+
         //check again if the unlocked it
         if (!fWalletUnlockMessagingEnabled)
             return false;
